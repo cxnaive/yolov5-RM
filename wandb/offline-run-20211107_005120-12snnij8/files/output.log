@@ -1,0 +1,21 @@
+Plotting labels...
+[34m[1mautoanchor: [39m[22mAnalyzing anchors... anchors/target = 3.25, Best Possible Recall (BPR) = 1.0000
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and labels... 180 found, 0 missing, 0 empty, 0 corrupted: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 180/180 [00:00<?, ?it/s]
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labels... 20 found, 0 missing, 0 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<?, ?it/s]
+Images sizes do not match. This will causes images to be display incorrectly in the UI.
+Image sizes 640 train, 640 test
+Using 4 dataloader workers
+Logging results to runs/train/exp65
+Starting training for 300 epochs...
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+     0/299     3.04G   0.03384    0.0108   0.02455  0.001096   0.02349   0.09379        70       640:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊           | 11/12 [00:05<00:00,  1.93it/s]
+Traceback (most recent call last):
+  File "train.py", line 515, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 298, in train
+    scaler.scale(loss).backward()
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/_tensor.py", line 307, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/autograd/__init__.py", line 154, in backward
+    Variable._execution_engine.run_backward(
+KeyboardInterrupt

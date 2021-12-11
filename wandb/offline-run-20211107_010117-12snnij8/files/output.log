@@ -1,0 +1,45 @@
+
+Plotting labels...
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and labels... 180 found, 0 missing, 0 empty, 0 corrupted: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 180/180 [00:00<?, ?it/s]
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labels... 20 found, 0 missing, 0 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<?, ?it/s]
+None
+Traceback (most recent call last):
+  File "train.py", line 515, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 210, in train
+    plot_labels(labels, save_dir, loggers)
+  File "/home/cx/rmvision/yolov5-RM/utils/plots.py", line 266, in plot_labels
+    sns.pairplot(x, corner=True, diag_kind='auto', kind='hist', diag_kws=dict(bins=50), plot_kws=dict(pmax=0.9))
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/seaborn/_decorators.py", line 46, in inner_f
+    return f(**kwargs)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/seaborn/axisgrid.py", line 2096, in pairplot
+    grid = PairGrid(data, vars=vars, x_vars=x_vars, y_vars=y_vars, hue=hue,
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/seaborn/_decorators.py", line 46, in inner_f
+    return f(**kwargs)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/seaborn/axisgrid.py", line 1316, in __init__
+    for label in ax.get_yticklabels():
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/axes/_base.py", line 73, in wrapper
+    return get_method(self)(*args, **kwargs)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/axis.py", line 1232, in get_ticklabels
+    return self.get_majorticklabels()
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/axis.py", line 1184, in get_majorticklabels
+    ticks = self.get_major_ticks()
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/axis.py", line 1359, in get_major_ticks
+    tick = self._get_tick(major=True)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/axis.py", line 2332, in _get_tick
+    return YTick(self.axes, 0, major=major, **tick_kw)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/axis.py", line 499, in __init__
+    self.gridline.set(
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/artist.py", line 1179, in set
+    return self.update(kwargs)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/artist.py", line 1064, in update
+    ret.append(func(v))
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/lines.py", line 734, in set_transform
+    super().set_transform(t)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/artist.py", line 388, in set_transform
+    self.stale = True
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/matplotlib/artist.py", line 241, in stale
+    @stale.setter
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/utils/data/_utils/signal_handling.py", line 66, in handler
+    _error_if_any_worker_fails()
+RuntimeError: DataLoader worker (pid 42638) exited unexpectedly with exit code 1. Details are lost due to multiprocessing. Rerunning with num_workers=0 may give better error trace.

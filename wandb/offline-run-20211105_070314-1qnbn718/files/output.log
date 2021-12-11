@@ -1,0 +1,41 @@
+Plotting labels...
+[34m[1mautoanchor: [39m[22mAnalyzing anchors... anchors/target = 3.28, Best Possible Recall (BPR) = 1.0000
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and labels... 180 found, 0 missing, 0 empty, 0 corrupted: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 180/180 [00:00<?, ?it/s]
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labels... 20 found, 0 missing, 0 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<?, ?it/s]
+Images sizes do not match. This will causes images to be display incorrectly in the UI.
+Image sizes 640 train, 640 test
+Using 4 dataloader workers
+Logging results to runs/train/exp56
+Starting training for 100 epochs...
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+      0/99     1.73G    0.1168   0.02722   0.05773    0.1122    0.2234    0.5374        13       640: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:05<00:00,  2.22it/s]
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+      1/99     3.18G    0.1137   0.02458   0.05894    0.1104    0.2257    0.5333        13       640: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:05<00:00,  2.08it/s]
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+      2/99     3.18G    0.1169   0.02425   0.06214    0.1066    0.2374    0.5473         9       640: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:06<00:00,  2.00it/s]
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+      3/99     3.18G    0.1082   0.02246   0.05771   0.09403    0.2109    0.4933        22       640: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 12/12 [00:05<00:00,  2.39it/s]
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+      4/99     3.18G    0.1138   0.02106   0.06218    0.0936    0.2236    0.5142        71       640:  33%|█████████████████████████████████████████████▎                                                                                          | 4/12 [00:03<00:06,  1.21it/s]
+Traceback (most recent call last):
+  File "train.py", line 513, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 264, in train
+    for i, (imgs, targets, paths, _) in pbar:  # batch -------------------------------------------------------------
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/tqdm/std.py", line 1180, in __iter__
+    for obj in iterable:
+  File "/home/cx/rmvision/yolov5-face/utils/face_datasets.py", line 101, in __iter__
+    yield next(self.iterator)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1186, in _next_data
+    idx, data = self._get_data()
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1142, in _get_data
+    success, data = self._try_get_data()
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 990, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/queue.py", line 179, in get
+    self.not_empty.wait(remaining)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/threading.py", line 306, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt

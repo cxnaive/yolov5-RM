@@ -1,0 +1,47 @@
+Plotting labels...
+[34m[1mautoanchor: [39m[22mAnalyzing anchors... anchors/target = 3.28, Best Possible Recall (BPR) = 1.0000
+edit: torch.Size([56, 17])
+targets!!: 56
+lks!!!: torch.Size([268, 10])
+gij!!!: torch.Size([268, 2])
+lks!!!: torch.Size([285, 10])
+gij!!!: torch.Size([285, 2])
+lks!!!: torch.Size([30, 10])
+gij!!!: torch.Size([30, 2])
+tensor([0.13328, 0.02339, 0.06559, 0.12465, 0.25938, 0.60628], device='cuda:0')
+edit: torch.Size([80, 17])
+targets!!: 80
+lks!!!: torch.Size([468, 10])
+gij!!!: torch.Size([468, 2])
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and labels... 180 found, 0 missing, 0 empty, 0 corrupted: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 180/180 [00:00<?, ?it/s]
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labels... 20 found, 0 missing, 0 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<?, ?it/s]
+Images sizes do not match. This will causes images to be display incorrectly in the UI.
+Image sizes 640 train, 640 test
+Using 4 dataloader workers
+Logging results to runs/train/exp35
+Starting training for 250 epochs...
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+     0/249     2.42G    0.1333   0.02339   0.06559    0.1247    0.2594    0.6063        56       640:   8%|███████████▎                                                                                                                            | 1/12 [00:01<00:19,  1.79s/it]/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [64,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [65,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [4,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [5,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [40,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [41,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [110,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [0,0,0], thread: [111,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [1,0,0], thread: [22,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/ATen/native/cuda/IndexKernel.cu:93: operator(): block: [1,0,0], thread: [23,0,0] Assertion `index >= -sizes[i] && index < sizes[i] && "index out of bounds"` failed.
+     0/249     2.42G    0.1333   0.02339   0.06559    0.1247    0.2594    0.6063        56       640:   8%|███████████▎                                                                                                                            | 1/12 [00:01<00:20,  1.85s/it]
+Traceback (most recent call last):
+  File "train.py", line 513, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 290, in train
+    loss, loss_items = compute_loss(pred, targets.to(device), model)  # loss scaled by batch_size
+  File "/home/cx/rmvision/yolov5-face/utils/loss.py", line 119, in compute_loss
+    tcls, tbox, indices, anchors, tlandmarks, lmks_mask, tcol = build_targets(p, targets, model)  # targets
+  File "/home/cx/rmvision/yolov5-face/utils/loss.py", line 276, in build_targets
+    lks[:, [0, 1]] = (lks[:, [0, 1]] - gij)
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+THCudaCheck FAIL file=/opt/conda/conda-bld/pytorch_1634272068694/work/aten/src/THC/THCCachingHostAllocator.cpp line=280 error=710 : device-side assert triggered

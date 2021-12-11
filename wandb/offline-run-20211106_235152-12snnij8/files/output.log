@@ -1,0 +1,18 @@
+Plotting labels...
+[34m[1mautoanchor: [39m[22mAnalyzing anchors... anchors/target = 3.28, Best Possible Recall (BPR) = 1.0000
+tensor([[-8.29926e-02,  2.93938e-01, -1.16943e-01,  ...,  3.91790e-01, -1.42000e+02, -9.50000e+01],
+        [-8.97408e-02, -1.26877e-02, -8.88710e-02,  ...,  1.24565e-01, -1.15000e+02, -1.21000e+02],
+        [ 1.52348e-01,  5.65216e-01,  2.93503e-01,  ..., -1.80779e-02, -1.18000e+02, -1.20000e+02],
+        ...,
+        [-1.15691e+00, -7.85810e-01, -7.11590e-01,  ..., -1.81928e+00, -1.21000e+02, -1.00000e+02],
+        [-2.31312e+00, -9.12674e-01, -2.06602e+00,  ..., -1.44005e+00, -1.46000e+02, -1.39000e+02],
+        [-1.59000e+02, -1.23000e+02, -1.59000e+02,  ..., -1.78951e+00, -1.59000e+02, -1.23000e+02]], device='cuda:0')
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and la
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labe
+Images sizes do not match. This will causes images to be display incorrectly in the UI.
+Image sizes 640 train, 640 test
+Using 4 dataloader workers
+Logging results to runs/train/exp60
+Starting training for 300 epochs...
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+  0%|                                                    | 0/12 [00:01<?, ?it/s]

@@ -1,0 +1,20 @@
+Plotting labels...
+[34m[1mautoanchor: [39m[22mAnalyzing anchors... anchors/target = 3.28, Best Possible Recall (BPR) = 1.0000
+edit: torch.Size([56, 17])
+nc!!!!!!: 9
+tensor([0.13328, 0.02339, 0.06558, 0.12466, 0.25937, 0.60628], device='cuda:0')
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and labels... 180 found, 0 missing, 0 empty, 0 corrupted: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 180/180 [00:00<?, ?it/s]
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labels... 20 found, 0 missing, 0 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<?, ?it/s]
+Images sizes do not match. This will causes images to be display incorrectly in the UI.
+Image sizes 640 train, 640 test
+Using 4 dataloader workers
+Logging results to runs/train/exp18
+Starting training for 250 epochs...
+     Epoch   gpu_mem       box       obj       cls       col  landmark     total   targets  img_size
+  0%|                                                                                                                                                                                                                                                      | 0/12 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "train.py", line 513, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 310, in train
+    s = ('%10s' * 2 + '%10.4g' * 7) % (
+TypeError: not all arguments converted during string formatting

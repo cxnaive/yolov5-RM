@@ -1,0 +1,30 @@
+Scanning '/home/cx/rmvision/datasets/final/train/labels.cache' for images and labels... 180 found, 0 missing, 0 empty, 0 corrupted: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████| 180/180 [00:00<?, ?it/s]
+Scanning '/home/cx/rmvision/datasets/final/val/labels.cache' for images and labels... 20 found, 0 missing, 0 empty, 0 corrupted: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<?, ?it/s]
+None
+None
+Traceback (most recent call last):
+  File "train.py", line 515, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 210, in train
+    plot_labels(labels, save_dir, loggers)
+  File "/home/cx/rmvision/yolov5-RM/utils/plots.py", line 263, in plot_labels
+    x = pd.DataFrame(b.transpose(), columns=['x', 'y', 'width', 'height'])
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/pandas/core/frame.py", line 672, in __init__
+    mgr = ndarray_to_mgr(
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 320, in ndarray_to_mgr
+    index, columns = _get_axes(
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/pandas/core/internals/construction.py", line 702, in _get_axes
+    columns = ensure_index(columns)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 6333, in ensure_index
+    return Index(index_like, copy=copy, tupleize_cols=False)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 495, in __new__
+    return Index(subarr, dtype=dtype, copy=copy, name=name, **kwargs)
+  File "/home/cx/miniconda3/envs/ml/lib/python3.8/site-packages/torch/utils/data/_utils/signal_handling.py", line 66, in handler
+    _error_if_any_worker_fails()
+RuntimeError: DataLoader worker (pid 40852) exited unexpectedly with exit code 1. Details are lost due to multiprocessing. Rerunning with num_workers=0 may give better error trace.
+None
+None
+None
+None
+None
+None

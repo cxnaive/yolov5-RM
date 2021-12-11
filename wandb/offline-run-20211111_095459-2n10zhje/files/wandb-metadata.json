@@ -1,0 +1,21 @@
+{
+    "os": "Linux-5.11.0-40-generic-x86_64-with-glibc2.17",
+    "python": "3.8.12",
+    "heartbeatAt": "2021-11-11T01:54:59.711534",
+    "startedAt": "2021-11-11T01:54:59.375666",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [
+        "--multi-scale",
+        "--notest"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "train.py",
+    "host": "cx",
+    "username": "cx",
+    "executable": "/home/cx/miniconda3/envs/ml/bin/python"
+}
