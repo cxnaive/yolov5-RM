@@ -116,15 +116,17 @@ class LandmarksLoss(nn.Module):
 
 def compute_loss(p, targets, model):  # predictions, targets, model
     device = targets.device
-    lcls, lbox, lobj, lmark, lcol = torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device)
-    tcls, tbox, indices, anchors, tlandmarks, lmks_mask, tcol = build_targets(p, targets, model)  # targets
+    lcls, lbox, lobj, lmark, lcol, lsize = torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device), torch.zeros(1, device=device)
+    tcls, tbox, indices, anchors, tlandmarks, lmks_mask, tcol, tsize = build_targets(p, targets, model)  # targets
 
     h = model.hyp  # hyperparameters
 
     # Define criteria
     BCEcol = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['cls_pw']], device=device))
     BCEcls = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['cls_pw']], device=device))  # weight=model.class_weights)
+    BCEsize = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['cls_pw']], device=device))
     BCEobj = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['obj_pw']], device=device))
+    
 
     landmarks_loss = LandmarksLoss(1.0)
 
@@ -134,7 +136,7 @@ def compute_loss(p, targets, model):  # predictions, targets, model
     # Focal loss
     g = h['fl_gamma']  # focal loss gamma
     if g > 0:
-        BCEcls, BCEobj, BCEcol = FocalLoss(BCEcls, g), FocalLoss(BCEobj, g), FocalLoss(BCEcol, g)
+        BCEcls, BCEobj, BCEcol, BCEsize = FocalLoss(BCEcls, g), FocalLoss(BCEobj, g), FocalLoss(BCEcol, g), FocalLoss(BCEsize, g)
 
     # Losses
     nt = 0  # number of targets
@@ -166,9 +168,14 @@ def compute_loss(p, targets, model):  # predictions, targets, model
                 lcls += BCEcls(ps[:, 15:15 + model.nc], t)  # BCE
             
             # Classification_color
-            t = torch.full_like(ps[:, 15 + model.nc:], cn, device=device)  # targets
+            t = torch.full_like(ps[:, 15 + model.nc:19 + model.nc], cn, device=device)  # targets
             t[range(n), tcol[i]] = cp
-            lcol += BCEcol(ps[:, 15 + model.nc:], t)  # BCE
+            lcol += BCEcol(ps[:, 15 + model.nc:19 + model.nc], t)  # BCE
+
+            # Classification_size
+            t = torch.full_like(ps[:, 19 + model.nc:], cn, device=device)  # targets
+            t[range(n), tsize[i]] = cp
+            lsize += BCEcol(ps[:, 19 + model.nc:], t)  # BCE
 
             # Append targets to text file
             # with open('targets.txt', 'a') as file:
@@ -194,12 +201,13 @@ def compute_loss(p, targets, model):  # predictions, targets, model
     lobj *= h['obj'] * s * (1.4 if no == 4 else 1.)
     lcls *= h['cls'] * s
     lcol *= h['cls'] * s
+    lsize *= h['cls'] * s
     lmark *= h['landmark'] * s
 
     bs = tobj.shape[0]  # batch size
 
-    loss = lbox + lobj + lcls + lmark + lcol
-    return loss * bs, torch.cat((lbox, lobj, lcls, lcol ,lmark, loss)).detach()
+    loss = lbox + lobj + lcls + lmark + lcol + lsize
+    return loss * bs, torch.cat((lbox, lobj, lcls, lcol, lsize,lmark, loss)).detach()
 
 
 def build_targets(p, targets, model):
@@ -210,10 +218,10 @@ def build_targets(p, targets, model):
     # Build targets for compute_loss(), input targets(image,class,x,y,w,h)
     det = model.module.model[-1] if is_parallel(model) else model.model[-1]  # Detect() module
     na, nt = det.na, targets.shape[0]  # number of anchors, targets
-    tcls, tbox, indices, anch, landmarks, lmks_mask, tcol =[],[], [], [], [], [], []
+    tcls, tbox, indices, anch, landmarks, lmks_mask, tcol, tsize = [],[], [], [], [], [], [], []
     #gain = torch.ones(7, device=targets.device)  # normalized to gridspace gain
-    #18:i cs x y w h x y x y x y x y x y cr ai
-    gain = torch.ones(18, device=targets.device)
+    #18:i cs x y w h x y x y x y x y x y cr csize ai
+    gain = torch.ones(19, device=targets.device).long()
     ai = torch.arange(na, device=targets.device).float().view(na, 1).repeat(1, nt)  # same as .repeat_interleave(nt)
     targets = torch.cat((targets.repeat(na, 1, 1), ai[:, :, None]), 2)  # append anchor indices
 
@@ -253,6 +261,7 @@ def build_targets(p, targets, model):
         
         b, cs = t[:, :2].long().T  # image, class
         cr = t[:,16].long().T
+        csize = t[:,17].long().T
         gxy = t[:, 2:4]  # grid xy
         gwh = t[:, 4:6]  # grid wh
         # print('offsets!!:',offsets)
@@ -261,12 +270,13 @@ def build_targets(p, targets, model):
         gi, gj = gij.T  # grid xy indices
 
         # Append
-        a = t[:, 17].long()  # anchor indices
+        a = t[:, 18].long()  # anchor indices
         indices.append((b, a, gj.clamp_(0, gain[3] - 1), gi.clamp_(0, gain[2] - 1)))  # image, anchor, grid indices
         tbox.append(torch.cat((gxy - gij, gwh), 1))  # box
         anch.append(anchors[a])  # anchors
         tcls.append(cs)  # class
         tcol.append(cr)
+        tsize.append(csize)
 
         #landmarks
         lks = t[:,6:16]
@@ -323,4 +333,4 @@ def build_targets(p, targets, model):
         landmarks.append(lks)
         #print('lks: ',  lks.size())
 
-    return tcls, tbox, indices, anch, landmarks, lmks_mask, tcol
+    return tcls, tbox, indices, anch, landmarks, lmks_mask, tcol, tsize

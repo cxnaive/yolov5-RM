@@ -1,5 +1,5 @@
-lr0: 0.01
-lrf: 0.2
+lr0: 0.008
+lrf: 0.15
 momentum: 0.937
 weight_decay: 0.0005
 warmup_epochs: 3.0
@@ -7,10 +7,10 @@ warmup_momentum: 0.8
 warmup_bias_lr: 0.1
 box: 0.05
 cls: 0.5
-landmark: 0.005
+landmark: 0.008
 cls_pw: 1.0
-obj: 1.0
-obj_pw: 1.0
+obj: 1.1
+obj_pw: 1.1
 iou_t: 0.2
 anchor_t: 4.0
 fl_gamma: 0.0

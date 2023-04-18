@@ -1,8 +1,8 @@
-weights: best.pt
+weights: last.pt
 cfg: models/yolov5n-0.5.yaml
 data: data/rm.yaml
 hyp: data/hyp.scratch.yaml
-epochs: 900
+epochs: 300
 batch_size: 16
 img_size:
 - 640

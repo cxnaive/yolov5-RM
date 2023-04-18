@@ -1,4 +1,4 @@
-weights: ''
+weights: best.pt
 cfg: models/yolov5n-0.5.yaml
 data: data/rm.yaml
 hyp: data/hyp.scratch.yaml

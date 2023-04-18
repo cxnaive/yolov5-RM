@@ -382,7 +382,9 @@ def non_max_suppression_face(prediction, conf_thres=0.25, iou_thres=0.45, classe
          detections with shape: nx6 (x1, y1, x2, y2, conf, cls)
     """
     ncr = 4
-    ncs = prediction.shape[2] - 19  # number of classes
+    ncsize = 2
+    ncs = prediction.shape[2] - 21  # number of classes
+    print('ncs:',ncs)
     xc = prediction[..., 4] > conf_thres  # candidates
 
     # Settings
@@ -393,7 +395,7 @@ def non_max_suppression_face(prediction, conf_thres=0.25, iou_thres=0.45, classe
     merge = False  # use merge-NMS
 
     t = time.time()
-    output = [torch.zeros((0, 17), device=prediction.device)] * prediction.shape[0]
+    output = [torch.zeros((0, 18), device=prediction.device)] * prediction.shape[0]
     for xi, x in enumerate(prediction):  # image index, image inference
         # Apply constraints
         # x[((x[..., 2:4] < min_wh) | (x[..., 2:4] > max_wh)).any(1), 4] = 0  # width-height
@@ -402,7 +404,7 @@ def non_max_suppression_face(prediction, conf_thres=0.25, iou_thres=0.45, classe
         # Cat apriori labels if autolabelling
         if labels and len(labels[xi]):
             l = labels[xi]
-            v = torch.zeros((len(l), ncs + ncr + 15), device=x.device)
+            v = torch.zeros((len(l), ncs + ncr + ncsize + 15), device=x.device)
             v[:, :4] = l[:, 1:5]  # box
             v[:, 4] = 1.0  # conf
             v[range(len(l)), l[:, 0].long() + 15] = 1.0  # cls
@@ -415,9 +417,10 @@ def non_max_suppression_face(prediction, conf_thres=0.25, iou_thres=0.45, classe
         # Convert To expanded class
         bs = x.shape[0]
         # print('before:',x.shape)
-        expanded_cls = torch.bmm(x[:,15:15 + ncs].view(bs,ncs,1),x[:,15 + ncs:].view(bs,1,ncr)).view(bs,-1)
+        expanded_col = torch.bmm(x[:,15:15 + ncs].view(bs,ncs,1),x[:,15 + ncs:15 + ncs + ncr].view(bs,1,ncr)).view(bs,-1)
+        expanded_cls = torch.bmm(expanded_col.view(bs,ncs * ncr,1),x[:,15 + ncs + ncr:].view(bs,1,ncsize)).view(bs,-1)
         x = torch.cat([x[:,:15],expanded_cls],1)
-        nc = ncr * ncs
+        nc = ncr * ncs * ncsize
         # print('after:',x.shape) 
 
         # Compute conf

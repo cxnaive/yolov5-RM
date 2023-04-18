@@ -10,11 +10,11 @@
 # download: https://github.com/ultralytics/yolov5/releases/download/v1.0/coco128.zip
 
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
-train: /home/cx/rmvision/datasets/final/train/  # 128 images
-val: /home/cx/rmvision/datasets/final/val/  # 128 images
+train: /home/nv/yolo_test/D418_Standard/train/  # 128 images
+val: /home/nv/yolo_test/D418_Standard/val/  # 128 images
 
 # number of classes
-nc: 9
+nc: 8
 
 # class names
-names: [ 'G', '1', '2', '3', '4', '5', 'O', 'Bs', 'Bb']
+names: [ 'G', '1', '2', '3', '4', '5', 'O', 'Bs']

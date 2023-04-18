@@ -64,8 +64,15 @@ def show_results(img, xywh, conf, landmarks, class_num):
         cv2.circle(img, (point_x, point_y), tl+1, clors[i], -1)
 
     tf = max(tl - 1, 1)  # font thickness
+    class_num = int(class_num)
+    c_size = class_num % 2
+    c_col = int(class_num / 2) % 4 
+    c_cls = int(int(class_num / 2) / 4)
     label = str(conf)[:5]
     cv2.putText(img, label, (x1, y1 - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+    cv2.putText(img, str(c_cls)+"/"+str(c_col)+"/"+str(c_size),(x1, y1 - 12), 0, tl / 2, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+    print(str(c_cls)+"/"+str(c_col)+"/"+str(c_size),conf)
+    # cv2.putText(img, str(class_num),(x1, y1 - 12), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
     return img
 
 
@@ -140,7 +147,7 @@ def detect_one(model, image_path, device):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='best.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='last.pt', help='model.pt path(s)')
     parser.add_argument('--image', type=str, default='data/images/15.png', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     opt = parser.parse_args()

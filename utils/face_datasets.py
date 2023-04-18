@@ -232,16 +232,16 @@ class LoadFaceImagesAndLabels(Dataset):  # for training/testing
                     with open(lb_file, 'r') as f:
                         l = np.array([x.split() for x in f.read().strip().splitlines()], dtype=np.float32)  # labels
                     if len(l):
-                        assert l.shape[1] == 16, 'labels require 15 columns each'
+                        assert l.shape[1] == 17, 'labels require 17 columns each'
                         assert (l >= -1).all(), 'negative labels'
                         assert (l[:, 1:15] <= 1).all(), 'non-normalized or out of bounds coordinate labels'
                         assert np.unique(l, axis=0).shape[0] == l.shape[0], 'duplicate labels'
                     else:
                         ne += 1  # label empty
-                        l = np.zeros((0, 16), dtype=np.float32)
+                        l = np.zeros((0, 17), dtype=np.float32)
                 else:
                     nm += 1  # label missing
-                    l = np.zeros((0, 16), dtype=np.float32)
+                    l = np.zeros((0, 17), dtype=np.float32)
                 x[im_file] = [l, shape]
             except Exception as e:
                 nc += 1
@@ -388,7 +388,7 @@ class LoadFaceImagesAndLabels(Dataset):  # for training/testing
                     # labels[:, [11, 12]] = labels[:, [13, 14]]
                     # labels[:, [13, 14]] = mouth_left
 
-        labels_out = torch.zeros((nL, 17))
+        labels_out = torch.zeros((nL, 18))
         if nL:
             labels_out[:, 1:] = torch.from_numpy(labels)
             # showlabels(img, labels[:, 1:5], labels[:, 5:15])
