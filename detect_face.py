@@ -95,7 +95,7 @@ def detect_one(model, image_path, device):
         img0 = cv2.resize(img0, (int(w0 * r), int(h0 * r)), interpolation=interp)
 
     imgsz = check_img_size(img_size, s=model.stride.max())  # check img_size
-
+    imgsz = 640
     img = letterbox(img0, new_shape=imgsz)[0]
     # Convert
     img = img[:, :, ::-1].transpose(2, 0, 1).copy()  # BGR to RGB, to 3x416x416
@@ -147,8 +147,8 @@ def detect_one(model, image_path, device):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='last.pt', help='model.pt path(s)')
-    parser.add_argument('--image', type=str, default='data/images/15.png', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--weights', nargs='+', type=str, default='epoch_200.pt', help='model.pt path(s)')
+    parser.add_argument('--image', type=str, default='data/images/frame0974bag1.jpg', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     opt = parser.parse_args()
     print(opt)

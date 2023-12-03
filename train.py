@@ -386,6 +386,20 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
                 if best_fitness == fi:
                     torch.save(ckpt, best)
                 del ckpt
+
+            save_epoch = (not opt.nosave) or ((epochs % 10 == 0) and not opt.evolve)
+            if save_epoch:
+                with open(results_file, 'r') as f:  # create checkpoint
+                    ckpt = {'epoch': epoch,
+                            'best_fitness': best_fitness,
+                            'training_results': f.read(),
+                            'model': ema.ema,
+                            'optimizer': None if final_epoch else optimizer.state_dict(),
+                            'wandb_id': wandb_run.id if wandb else None}
+                # Save last, best and delete
+                ckpt_name = 'epoch_'+str(epoch)+'.pt'
+                save_path =  wdir / ckpt_name
+                torch.save(ckpt, save_path)
         # end epoch ----------------------------------------------------------------------------------------------------
     # end training
 

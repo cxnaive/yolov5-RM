@@ -1,15 +1,20 @@
-# Hyperparameters for COCO training from scratch
-# python train.py --batch 40 --cfg yolov5m.yaml --weights '' --data coco.yaml --img 640 --epochs 300
+# Hyperparameters for VOC finetuning
+# python train.py --batch 64 --weights yolov5m.pt --data voc.yaml --img 512 --epochs 50
 # See tutorials for hyperparameter evolution https://github.com/ultralytics/yolov5#tutorials
 
 
-lr0: 0.004  # initial learning rate (SGD=1E-2, Adam=1E-3)
-lrf: 0.1  # final OneCycleLR learning rate (lr0 * lrf)
-momentum: 0.937  # SGD momentum/Adam beta1
-weight_decay: 0.0005  # optimizer weight decay 5e-4
-warmup_epochs: 0.0  # warmup epochs (fractions ok)
-warmup_momentum: 0.8  # warmup initial momentum
-warmup_bias_lr: 0.08  # warmup initial bias lr
+# Hyperparameter Evolution Results
+# Generations: 306
+#                   P         R     mAP.5 mAP.5:.95       box       obj       cls
+# Metrics:        0.6     0.936     0.896     0.684    0.0115   0.00805   0.00146
+
+lr0: 0.0032
+lrf: 0.12
+momentum: 0.843
+weight_decay: 0.00036
+warmup_epochs: 2.0
+warmup_momentum: 0.5
+warmup_bias_lr: 0.05
 box: 0.05  # box loss gain
 cls: 0.5  # cls loss gain
 landmark: 0.017 # landmark loss gain
